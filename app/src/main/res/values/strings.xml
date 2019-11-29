@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Drink Away</string>
+    <string name="playBtn">Play</string>
+    <string name="setupBtn">Setup</string>
+    <string name="addBtn">Add</string>
+    <string name="creditsBtn">Credits</string>
+    <string name="add_hint">Write here your dare</string>
+    <string name="creditsOriginal"><u>Logo Design:</u> \n  Julia Lameris \n \n <u>Branding:</u> \n Julia Lameris \n Wouter Bosch \n \n <u>App Design &amp; Programming:</u> \n Wouter Bosch \n \n <u>Concept:</u> \n Julia Lameris \n Wouter Bosch</string>
+    <string name="back">Back to previous screen</string>
+    <string name="dare"></string>
+    <string name="amount">1</string>
+    <string name="save">Save</string>
+    <string name="next">Next</string>
+    <string name="start">Press next to start</string>
+    <string name="empty" />
+    <string name="maxChar">Max 100 characters</string>
+    <string name="delete">Delete</string>
+    <string name="testDare">The person across from you gets to send a text from your phone</string>
+    <string name="end">END \n Press the reload button to start over</string>
+    <string name="refresh">Refreshes screen</string>
+
+</resources>
