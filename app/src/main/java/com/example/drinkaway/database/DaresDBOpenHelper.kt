@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.drinkaway.database.model.dare
 
@@ -13,11 +14,11 @@ class DaresDBOpenHelper(
 ) : SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
 
     override fun onCreate(db: SQLiteDatabase) {
-        val CREATE_DARES_TABLE = ("CREATE TABLE" +
+        val CREATE_DARES_TABLE = ("CREATE TABLE " +
                 TABLE_NAME + "(" +
-                COLUMN_ID + " INTEGER PRIMARY KEY," +
-                COLUMN_DARE_TEXT + " TEXT," +
-                COLUMN_AMOUNT + " INT" +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_DARE_TEXT + " TEXT, " +
+                COLUMN_AMOUNT + " INT, " +
                 COLUMN_DRINK_AMOUNT + " INT" + ")")
         db.execSQL(CREATE_DARES_TABLE)
     }
@@ -37,14 +38,36 @@ class DaresDBOpenHelper(
         db.close()
     }
 
-    fun getALlDares(): Cursor? {
+    fun getAllDares(): ArrayList<dare> {
         val db = this.readableDatabase
-        return db.rawQuery("SELECT * FROM $TABLE_NAME", null)
+        val dares = ArrayList<dare>()
+        var cursor: Cursor? = null
+        try {
+            cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
+        } catch (e: SQLiteException) {
+            return ArrayList()
+        }
+        var dareText: String
+        var amount: Int
+        var drinkAmount: Int
+        var id: Int
+        if (cursor!!.moveToFirst()) {
+            while (cursor.isAfterLast == false) {
+                dareText = cursor.getString(cursor.getColumnIndex(COLUMN_DARE_TEXT))
+                amount = cursor.getInt(cursor.getColumnIndex(COLUMN_AMOUNT))
+                drinkAmount = cursor.getInt(cursor.getColumnIndex(COLUMN_DRINK_AMOUNT))
+                id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
+
+                dares.add(dare(id, dareText, amount, drinkAmount))
+                cursor.moveToNext()
+            }
+        }
+        return dares
     }
 
 
     companion object {
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
         private const val DATABASE_NAME = "dares.db"
         const val TABLE_NAME = "dares"
         const val COLUMN_ID = "_id"

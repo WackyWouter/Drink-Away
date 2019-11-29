@@ -10,6 +10,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.drinkaway.database.DaresDBOpenHelper
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.random.Random
 
@@ -27,6 +28,15 @@ class PlayActivity : AppCompatActivity() {
 
         val reloaded = savedInstanceState?.get("reloaded")
         Log.d("reloadTest", reloaded.toString())
+
+        //TODO use this to show dares
+        val dbHandler = DaresDBOpenHelper(this, null)
+        val dares = dbHandler.getAllDares()
+        dares.forEach {
+            Log.d("sqlLite test", it.id.toString())
+            Log.d("sqlLite test", it.dareText.toString())
+        }
+
 
         if (reloaded != true) {
             val TAG = "Firestore"

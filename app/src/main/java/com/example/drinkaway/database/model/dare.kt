@@ -15,7 +15,9 @@ class dare {
 
     //TODO mabye more constructors like below
 
-//    constructor(dareText: String){
-//        this.dareText = dareText
-//    }
+    constructor(dareText: String, amount: Int, drinkAmount: Int) {
+        this.dareText = dareText
+        this.amount = amount
+        this.drinkAmount = drinkAmount
+    }
 }
