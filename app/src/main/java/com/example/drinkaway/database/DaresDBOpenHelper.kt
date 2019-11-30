@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import com.example.drinkaway.database.model.dare
 
 class DaresDBOpenHelper(
@@ -21,6 +22,9 @@ class DaresDBOpenHelper(
                 COLUMN_AMOUNT + " INT, " +
                 COLUMN_DRINK_AMOUNT + " INT" + ")")
         db.execSQL(CREATE_DARES_TABLE)
+
+
+        //TODO add initial 30 dares.
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -40,11 +44,12 @@ class DaresDBOpenHelper(
 
     fun getAllDares(): ArrayList<dare> {
         val db = this.readableDatabase
-        val dares = ArrayList<dare>()
+        var dares = ArrayList<dare>()
         var cursor: Cursor? = null
         try {
             cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
         } catch (e: SQLiteException) {
+            Log.d("SQLiteExpection", "SQLite error: ".plus(e.toString()))
             return ArrayList()
         }
         var dareText: String
@@ -53,16 +58,63 @@ class DaresDBOpenHelper(
         var id: Int
         if (cursor!!.moveToFirst()) {
             while (cursor.isAfterLast == false) {
+                id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
                 dareText = cursor.getString(cursor.getColumnIndex(COLUMN_DARE_TEXT))
                 amount = cursor.getInt(cursor.getColumnIndex(COLUMN_AMOUNT))
                 drinkAmount = cursor.getInt(cursor.getColumnIndex(COLUMN_DRINK_AMOUNT))
-                id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
-
                 dares.add(dare(id, dareText, amount, drinkAmount))
                 cursor.moveToNext()
             }
         }
+        if (cursor != null) {
+            cursor.close()
+        }
+        db.close()
         return dares
+    }
+
+    fun getSpecificDareById(id: Int): dare {
+        val db = this.readableDatabase
+        var dare = dare(0, "", 0, 0)
+        var cursor: Cursor? = null
+        try {
+            cursor = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COLUMN_ID =  $id", null)
+        } catch (e: SQLiteException) {
+            Log.d("SQLiteExpection", "SQLite error: ".plus(e.toString()))
+            return dare("Database Error", 0, 0)
+        }
+        if (cursor!!.moveToFirst()) {
+            dare = dare(
+                cursor.getInt(cursor.getColumnIndex(COLUMN_ID)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_DARE_TEXT)),
+                cursor.getInt(cursor.getColumnIndex(COLUMN_AMOUNT)),
+                cursor.getInt(cursor.getColumnIndex(COLUMN_DRINK_AMOUNT))
+            )
+        }
+        if (cursor != null) {
+            cursor.close()
+        }
+        db.close()
+        return dare
+    }
+
+    fun updateDare(dare: dare) {
+        val db = this.writableDatabase
+        val values = ContentValues()
+
+        values.put(COLUMN_ID, dare.id)
+        values.put(COLUMN_DARE_TEXT, dare.dareText)
+        values.put(COLUMN_AMOUNT, dare.amount)
+        values.put(COLUMN_DRINK_AMOUNT, dare.drinkAmount)
+        db.update(TABLE_NAME, values, "$COLUMN_ID = ${dare.id}", null)
+        db.close()
+
+    }
+
+    fun DeleteDare(id: Int) {
+        val db = writableDatabase
+        db.delete(TABLE_NAME, "$COLUMN_ID = $id", null)
+        db.close()
     }
 
 
