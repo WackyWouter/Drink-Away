@@ -14,12 +14,10 @@ import com.example.drinkaway.database.DaresDBOpenHelper
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.random.Random
 
-
 class PlayActivity : AppCompatActivity() {
 
     var text = mutableListOf<String>()
     var amount = mutableListOf<Int>()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +34,6 @@ class PlayActivity : AppCompatActivity() {
             Log.d("sqlLite test", it.id.toString())
             Log.d("sqlLite test", it.dareText.toString())
         }
-
 
         if (reloaded != true) {
             val TAG = "Firestore"
@@ -58,7 +55,6 @@ class PlayActivity : AppCompatActivity() {
                     Toast.makeText(this, "Error getting documents", Toast.LENGTH_SHORT).show()
                 }
         }
-
     }
 
 

@@ -23,8 +23,7 @@ class DaresDBOpenHelper(
                 COLUMN_DRINK_AMOUNT + " INT" + ")")
         db.execSQL(CREATE_DARES_TABLE)
 
-
-        //TODO add initial 30 dares.
+        initialDares(db)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -44,7 +43,7 @@ class DaresDBOpenHelper(
 
     fun getAllDares(): ArrayList<dare> {
         val db = this.readableDatabase
-        var dares = ArrayList<dare>()
+        val dares = ArrayList<dare>()
         var cursor: Cursor? = null
         try {
             cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
@@ -66,9 +65,7 @@ class DaresDBOpenHelper(
                 cursor.moveToNext()
             }
         }
-        if (cursor != null) {
-            cursor.close()
-        }
+        cursor.close()
         db.close()
         return dares
     }
@@ -91,9 +88,7 @@ class DaresDBOpenHelper(
                 cursor.getInt(cursor.getColumnIndex(COLUMN_DRINK_AMOUNT))
             )
         }
-        if (cursor != null) {
-            cursor.close()
-        }
+        cursor.close()
         db.close()
         return dare
     }
@@ -102,7 +97,6 @@ class DaresDBOpenHelper(
         val db = this.writableDatabase
         val values = ContentValues()
 
-        values.put(COLUMN_ID, dare.id)
         values.put(COLUMN_DARE_TEXT, dare.dareText)
         values.put(COLUMN_AMOUNT, dare.amount)
         values.put(COLUMN_DRINK_AMOUNT, dare.drinkAmount)
@@ -117,9 +111,59 @@ class DaresDBOpenHelper(
         db.close()
     }
 
+    private fun initialDares(db: SQLiteDatabase) {
+//        val db = this.writableDatabase
+        val values = ContentValues()
+        val amount = 1
+        val drinkAmount = 1
+        val dareTexts: Array<String> = arrayOf(
+            "Put your shoe on your head for 1 round",
+            "The person across from you gets to send a text from your phone",
+            "Give your most sassy mean girl reaction",
+            "Do a shot with someone you don't know",
+            "Ask for a random drink",
+            "Cut of a piece of your hair",
+            "Run in a circle around the terraces",
+            "Choose a person to be your drinking buddy",
+            "You are not allowed to smoke for a hour",
+            "Exchange shoes with the person across from you",
+            "Write you name with your ass",
+            "Category: objects that fit in your anus",
+            "Give your glasses to someone you don't know",
+            "Give away three sips to a person of your choosing",
+            "Put your t-shirt or hoodie on inside out",
+            "Chug your glass",
+            "Time for the bus",
+            "Do a dance on your chair for us",
+            "The person on your left gets to draw on your face with a pen",
+            "Let the person on your left do your hair",
+            "Convince someone you don't know to take of their shoes",
+            "Take a shot with a stranger",
+            "Do a freestyle rap",
+            "Smoke three cigarettes at the same time",
+            "Cut of a piece of your eyelash",
+            "You have to pick two people to be pee buddies. When one of the pee buddies has to go, the other one goes with him/her",
+            "The person on your right orders a drink for you and you have to drink it",
+            "Walk up to someone and act like he/she is your long lost childhood friend",
+            "Lick the person to your right",
+            "For 1 round everyone has to say the last word of their sentence twice",
+            "Quiz master. If anybody answers your questions they have to drink",
+            "Forbidden word. You can choose one word. When anybody says that word they have to drink",
+            "Snake eyes. When anybody looks you in the eyes. They have to drink"
+        )
+
+
+        values.put(COLUMN_AMOUNT, amount)
+        values.put(COLUMN_DRINK_AMOUNT, drinkAmount)
+
+        dareTexts.forEach {
+            values.put(COLUMN_DARE_TEXT, it)
+            db.insert(TABLE_NAME, null, values)
+        }
+    }
 
     companion object {
-        private const val DATABASE_VERSION = 2
+        private const val DATABASE_VERSION = 3
         private const val DATABASE_NAME = "dares.db"
         const val TABLE_NAME = "dares"
         const val COLUMN_ID = "_id"
@@ -127,5 +171,6 @@ class DaresDBOpenHelper(
         const val COLUMN_AMOUNT = "amount"
         const val COLUMN_DRINK_AMOUNT = "drinkAmount"
     }
+
 
 }
