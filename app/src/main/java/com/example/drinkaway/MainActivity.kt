@@ -1,5 +1,6 @@
 package com.example.drinkaway
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -11,9 +12,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
-
+        drinkResponsibly()
     }
-
 
     fun addActivity(view: View) {
         val intent = Intent(this, AddActivity::class.java)
@@ -33,5 +33,17 @@ class MainActivity : AppCompatActivity() {
     fun setupActivity(view: View) {
         val intent = Intent(this, SetupActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun drinkResponsibly() {
+        val builder = AlertDialog.Builder(this@MainActivity)
+        builder.setTitle("Warning")
+        builder.setMessage("Please drink responsibly. By continuing, you agree that you are responsible for any consequences that may result from the use of Drink Away")
+        builder.setPositiveButton("Okey") { dialog, which -> }
+        builder.setNegativeButton("Close") { dialog, which ->
+            finishAffinity()
+        }
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 }
