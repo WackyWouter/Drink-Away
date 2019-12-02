@@ -10,11 +10,11 @@ import android.widget.TextView
 import com.example.drinkaway.database.model.dare
 
 
-class MyListAdapter(context: Context, dares: ArrayList<dare>) :
+class MyListAdapter(context: Context, dares: List<dare>) :
     BaseAdapter() {
 
     private val mContext: Context
-    private val mDares: ArrayList<dare>
+    private val mDares: List<dare>
 
 
 

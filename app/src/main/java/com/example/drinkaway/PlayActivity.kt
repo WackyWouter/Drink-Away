@@ -3,7 +3,6 @@ package com.example.drinkaway
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
@@ -23,15 +22,8 @@ class PlayActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         val reloaded = savedInstanceState?.get("reloaded")
-        Log.d("reloadTest", reloaded.toString())
-
-        //TODO use this to show dares
         val dbHandler = DaresDBOpenHelper(this, null)
         dares = dbHandler.getAllDares()
-        dares.forEach {
-            Log.d("sqlLite test", it.id.toString())
-            Log.d("sqlLite test", it.dareText.toString())
-        }
         randomDare()
     }
 
