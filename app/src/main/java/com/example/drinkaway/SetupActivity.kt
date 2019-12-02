@@ -24,8 +24,7 @@ class SetupActivity : AppCompatActivity() {
     }
 
     fun createList() {
-        //TODO fix sorting array alphabeticly
-        val daresSorted = dares.sortedBy { it.dareText } as ArrayList<dare>
+        val daresSorted = dares.sortedBy { it.dareText }
         val listView = findViewById<ListView>(R.id.dareList)
         listView.adapter = MyListAdapter(this, daresSorted)
 

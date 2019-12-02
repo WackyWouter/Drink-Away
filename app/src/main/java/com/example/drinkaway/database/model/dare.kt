@@ -13,8 +13,6 @@ class dare {
         this.drinkAmount = drinkAmount
     }
 
-    //TODO mabye more constructors like below
-
     constructor(dareText: String, amount: Int, drinkAmount: Int) {
         this.dareText = dareText
         this.amount = amount

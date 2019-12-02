@@ -70,9 +70,7 @@ class DareDetails : AppCompatActivity() {
         builder.setPositiveButton("YES") { dialog, which ->
             delete()
         }
-        builder.setNegativeButton("No") { dialog, which ->
-            //TODO make a thingy here mabye
-        }
+        builder.setNegativeButton("No") { dialog, which -> }
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
