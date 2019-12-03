@@ -2,8 +2,11 @@ package com.example.drinkaway
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,11 +26,45 @@ class DareDetails : AppCompatActivity() {
         id = intent.getSerializableExtra("details") as Int
         val dareTextView = findViewById<TextView>(R.id.dareText)
         val amountTextView = findViewById<TextView>(R.id.amount)
+        val drinksTextView = findViewById<TextView>(R.id.drinks)
+        val drinksBool: CheckBox = findViewById<CheckBox>(R.id.drinkBool)
         val dbHandler = DaresDBOpenHelper(this, null)
         val dare = dbHandler.getSpecificDareById(id)
         dareTextView.text = dare.dareText
         amountTextView.text = dare.amount.toString()
+        drinksTextView.text = dare.drinkAmount.toString()
+
+        if (dare.drinkBool == 1) {
+            drinksBool.setTextColor(Color.parseColor("#ffffff"))
+            drinksBool.isChecked = true
+            drinksTextView.setTextColor(Color.parseColor("#ffffff"))
+            drinksTextView.backgroundTintList =
+                applicationContext.resources.getColorStateList(R.color.drinkamount1, null)
+        } else {
+            drinksBool.isChecked = false
+            drinksBool.setTextColor(Color.parseColor("#696969"))
+            drinksTextView.setTextColor(Color.parseColor("#545454"))
+            drinksTextView.backgroundTintList =
+                applicationContext.resources.getColorStateList(R.color.drinkamount0, null)
+        }
+
+
+        drinksBool.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                drinksBool.setTextColor(Color.parseColor("#ffffff"))
+                drinksTextView.setTextColor(Color.parseColor("#ffffff"))
+                drinksTextView.backgroundTintList =
+                    applicationContext.resources.getColorStateList(R.color.drinkamount1, null)
+            } else {
+                drinksBool.setTextColor(Color.parseColor("#696969"))
+                drinksTextView.setTextColor(Color.parseColor("#545454"))
+                drinksTextView.backgroundTintList =
+                    applicationContext.resources.getColorStateList(R.color.drinkamount0, null)
+            }
+        }
+
     }
+
 
     fun back(view: View) {
         val intent = Intent(this, SetupActivity::class.java)
@@ -39,13 +76,24 @@ class DareDetails : AppCompatActivity() {
         val oldDare = dbHandler.getSpecificDareById(id)
         val dareTextView = findViewById<TextView>(R.id.dareText)
         val amountTextView = findViewById<TextView>(R.id.amount)
+        val drinksTextView = findViewById<TextView>(R.id.drinks)
+        val drinksBool: CheckBox = findViewById<CheckBox>(R.id.drinkBool)
         val dareText = dareTextView.text.toString()
         val amount = (amountTextView.text).toString()
-        val drinkAmount = 1
+        val drinks = (drinksTextView.text).toString()
+        val drinksBoolValue: Int
+        if (drinksBool.isChecked) {
+            drinksBoolValue = 1
+        } else {
+            drinksBoolValue = 0
+        }
 
-        if (dareText.isNotEmpty() && dareText.isNotEmpty() && !(dareText == oldDare.dareText && amount == oldDare.amount.toString())) {
+        if (dareText.isNotEmpty() && amount.isNotEmpty() && drinks.isNotEmpty() && !(dareText == oldDare.dareText && amount == oldDare.amount.toString() && drinks == oldDare.drinkAmount.toString() && drinksBoolValue == oldDare.drinkBool)) {
             val intent = Intent(this, SetupActivity::class.java)
-            val newDare = dare(id, dareText, amount.toInt(), drinkAmount)
+            Log.d("TESTING", "id:".plus(id.toString()))
+            Log.d("TESTING", "text: ".plus(dareText))
+            Log.d("TESTING", "drinksBool: ".plus(drinksBoolValue.toString()))
+            val newDare = dare(id, dareText, amount.toInt(), drinks.toInt(), drinksBoolValue)
 
             dbHandler.updateDare(newDare)
             startActivity(intent)
@@ -53,9 +101,11 @@ class DareDetails : AppCompatActivity() {
             Toast.makeText(applicationContext, "No dare was entered! ", Toast.LENGTH_SHORT).show()
         } else if (amount.isEmpty()) {
             Toast.makeText(applicationContext, "No amount was entered! ", Toast.LENGTH_SHORT).show()
-        } else if (dareText == oldDare.dareText && amount == oldDare.amount.toString()) {
+        } else if (drinks.isEmpty()) {
+            Toast.makeText(applicationContext, "No drink amount was entered! ", Toast.LENGTH_SHORT)
+                .show()
+        } else if (dareText == oldDare.dareText && amount == oldDare.amount.toString() && drinks == oldDare.drinkAmount.toString() && drinksBoolValue == oldDare.drinkBool) {
             val intent = Intent(this, SetupActivity::class.java)
-
             startActivity(intent)
         }
     }

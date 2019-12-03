@@ -34,10 +34,30 @@
         android:text="@string/amount"
         android:textAlignment="center"
         android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintEnd_toEndOf="@+id/button2"
+        app:layout_constraintTop_toBottomOf="@+id/dareText"
+        app:layout_constraintVertical_bias="0.20"
+        tools:ignore="LabelFor" />
+
+    <EditText
+        android:id="@+id/drinks"
+        style="@style/WhiteText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/drinkamount1"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:maxLength="2"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="@string/amount"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/addItem"
         app:layout_constraintEnd_toEndOf="@+id/addItem"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/dareText"
-        app:layout_constraintTop_toTopOf="@+id/dareText"
+        app:layout_constraintTop_toBottomOf="@+id/dareText"
+        app:layout_constraintVertical_bias="0.20"
         tools:ignore="LabelFor" />
 
     <EditText
@@ -45,8 +65,6 @@
         style="@style/WhiteText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
         android:hint="@string/testDare"
         android:importantForAutofill="no"
         android:inputType="textMultiLine"
@@ -55,7 +73,7 @@
         android:singleLine="false"
         android:text="@string/dare"
         android:textSize="25sp"
-        app:layout_constraintEnd_toStartOf="@+id/amount"
+        app:layout_constraintEnd_toEndOf="@+id/addItem"
         app:layout_constraintStart_toStartOf="@+id/button2"
         app:layout_constraintTop_toBottomOf="@+id/back" />
 
@@ -82,6 +100,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/button2" />
+
+    <TextView
+        android:id="@+id/amountText"
+        style="@style/WhiteText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/amountText"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/amount"
+        app:layout_constraintStart_toStartOf="@+id/button2" />
+
+    <CheckBox
+        android:id="@+id/drinkBool"
+        style="@style/WhiteText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:buttonTint="@color/checkbox"
+        android:checked="true"
+        android:text="@string/drinkAmount"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/drinks"
+        app:layout_constraintStart_toStartOf="@+id/addItem" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

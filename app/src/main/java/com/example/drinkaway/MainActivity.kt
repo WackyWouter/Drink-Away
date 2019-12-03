@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
         drinkResponsibly()
     }
 
+
     fun addActivity(view: View) {
         val intent = Intent(this, AddActivity::class.java)
         startActivity(intent)

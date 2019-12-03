@@ -28,7 +28,7 @@ class AddActivity : AppCompatActivity() {
         if (dareText.isNotEmpty()) {
 
             val dbHandler = DaresDBOpenHelper(this, null)
-            val newDare = dare(dareText, 1, 1)
+            val newDare = dare(dareText, 1, 1, 1)
             dbHandler.addDare(newDare)
             Toast.makeText(this, dareText + " Added to database", Toast.LENGTH_LONG).show()
             val intent = Intent(this, AddActivity::class.java)

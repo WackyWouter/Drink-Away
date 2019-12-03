@@ -18,5 +18,7 @@
     <string name="testDare">The person across from you gets to send a text from your phone</string>
     <string name="end">END \n Press the reload button to start over</string>
     <string name="refresh">Refreshes screen</string>
+    <string name="amountText">Amount:</string>
+    <string name="drinkAmount">Sips:</string>
 
 </resources>
