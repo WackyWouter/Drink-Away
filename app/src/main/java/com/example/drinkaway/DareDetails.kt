@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
@@ -90,9 +89,6 @@ class DareDetails : AppCompatActivity() {
 
         if (dareText.isNotEmpty() && amount.isNotEmpty() && drinks.isNotEmpty() && !(dareText == oldDare.dareText && amount == oldDare.amount.toString() && drinks == oldDare.drinkAmount.toString() && drinksBoolValue == oldDare.drinkBool)) {
             val intent = Intent(this, SetupActivity::class.java)
-            Log.d("TESTING", "id:".plus(id.toString()))
-            Log.d("TESTING", "text: ".plus(dareText))
-            Log.d("TESTING", "drinksBool: ".plus(drinksBoolValue.toString()))
             val newDare = dare(id, dareText, amount.toInt(), drinks.toInt(), drinksBoolValue)
 
             dbHandler.updateDare(newDare)

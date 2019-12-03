@@ -3,7 +3,6 @@ package com.example.drinkaway
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
@@ -34,13 +33,9 @@ class PlayActivity : AppCompatActivity() {
         val dareTextView = findViewById<TextView>(R.id.dareTextRandom)
         val nextBtn = findViewById<Button>(R.id.nextBtn)
         if (dares[randomValues].drinkBool == 1) {
-            Log.d("testing", "if")
-            Log.d("testing", dares[randomValues].id.toString())
             dareTextView.text =
                 (dares[randomValues].dareText)!!.plus(" Sips: ${dares[randomValues].drinkAmount}")
         } else {
-            Log.d("testing", "else")
-            Log.d("testing", dares[randomValues].id.toString())
             dareTextView.text = (dares[randomValues].dareText)
         }
         amountCheck(randomValues)
@@ -48,15 +43,10 @@ class PlayActivity : AppCompatActivity() {
         nextBtn.setOnClickListener {
             if (dares.size != 0) {
                 randomValues = Random.nextInt(0, dares.size)
-                Log.d("testingggg", dares[randomValues].drinkBool.toString())
                 if (dares[randomValues].drinkBool == 1) {
-                    Log.d("testing", "if")
-                    Log.d("testing", dares[randomValues].id.toString())
                     dareTextView.text =
                         (dares[randomValues].dareText)!!.plus(" Sips: ${dares[randomValues].drinkAmount}")
                 } else {
-                    Log.d("testing", "else")
-                    Log.d("testing", dares[randomValues].id.toString())
                     dareTextView.text = (dares[randomValues].dareText)
                 }
                 amountCheck(randomValues)
