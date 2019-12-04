@@ -12,7 +12,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
-        drinkResponsibly()
+        if (startup) {
+            drinkResponsibly()
+        }
+        startup = false
     }
 
 
@@ -46,5 +49,10 @@ class MainActivity : AppCompatActivity() {
         }
         val dialog: AlertDialog = builder.create()
         dialog.show()
+    }
+
+    companion object {
+        private var startup = true
+
     }
 }
