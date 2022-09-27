@@ -1,1 +1,1 @@
-A WIP drinking game app for android
+A WIP drinking game app for android in kotlin
